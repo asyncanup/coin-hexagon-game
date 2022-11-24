@@ -43,6 +43,7 @@
       { x: 150, y: -13.4 },
     ],
     state: states.waiting(),
+    slideSpeed: 1 / 10,
   };
 
 // --- render loop ---
@@ -70,10 +71,8 @@
       var circleIndex = -1;
       for (var index = 0; index < data.circlePositions.length; index += 1) {
         var pos = data.circlePositions[index];
-        var diffX = startPosition.x - pos.x;
-        var diffY = startPosition.y - pos.y;
-        var distSquared = diffX * diffX + diffY * diffY;
-        if (distSquared < data.circleRadius * data.circleRadius) {
+        var distSquared = squaredDistBetween(startPosition, pos);
+        if (distSquared < Math.pow(2 * data.circleRadius, 2)) {
           circleIndex = index;
           break;
         }
@@ -98,6 +97,12 @@
   };
 
 // --- helpers ---
+  function squaredDistBetween(posA, posB) {
+    var diffX = posA.x - posB.x;
+    var diffY = posA.y - posB.y;
+    return diffX * diffX + diffY * diffY;
+  }
+
   function setScreenSize() {
     var width = data.screen.width = window.innerWidth;
     var height = data.screen.height = window.innerHeight;
@@ -106,9 +111,29 @@
 
   function setSlidingCirclePosition() {
     if (data.state.type === 'sliding') {
-      var slidingCircle = data.circlePositions[data.state.circleIndex];
-      slidingCircle.x = data.state.currentPosition.x - data.state.offsetFromCenter.x;
-      slidingCircle.y = data.state.currentPosition.y - data.state.offsetFromCenter.y;
+      var intendedPos = {
+        x: data.state.currentPosition.x - data.state.offsetFromCenter.x,
+        y: data.state.currentPosition.y - data.state.offsetFromCenter.y,
+      };
+      var oldPos = data.circlePositions[data.state.circleIndex];
+      var moveToPos = {
+        x: oldPos.x + data.slideSpeed * (intendedPos.x - oldPos.x),
+        y: oldPos.y + data.slideSpeed * (intendedPos.y - oldPos.y),
+      };
+      var overlappingCircleIndex = -1;
+      for (var index = 0; index < data.circlePositions.length; index += 1) {
+        if (index === data.state.circleIndex) continue;
+        var otherCirclePos = data.circlePositions[index];
+        var distSquared = squaredDistBetween(otherCirclePos, moveToPos);
+        if (distSquared < Math.pow(2 * data.circleRadius, 2)) {
+          overlappingCircleIndex = index;
+          break;
+        }
+      }
+      if (overlappingCircleIndex === -1) {
+        oldPos.x = moveToPos.x;
+        oldPos.y = moveToPos.y;
+      }
     }
   }
 
