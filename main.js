@@ -44,6 +44,7 @@
     ],
     state: states.waiting(),
     slideSpeed: 1 / 10,
+    showDebugInfo: window.location.search === '?debug',
   };
 
 // --- render loop ---
@@ -72,7 +73,7 @@
       for (var index = 0; index < data.circlePositions.length; index += 1) {
         var pos = data.circlePositions[index];
         var distSquared = squaredDistBetween(startPosition, pos);
-        if (distSquared < Math.pow(2 * data.circleRadius, 2)) {
+        if (distSquared < Math.pow(data.circleRadius, 2)) {
           circleIndex = index;
           break;
         }
@@ -138,7 +139,9 @@
   }
 
   function setDebugText() {
-    el.debug.innerText = JSON.stringify(data, null, 2);
+    if (data.showDebugInfo) {
+      el.debug.innerText = JSON.stringify(data, null, 2);
+    }
   }
 
   function positionCircles() {
