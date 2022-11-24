@@ -1,29 +1,37 @@
 <html>
-    <head>
-        <title>Coin Hexagon game</title>
-        <style>
-            html, body {
-                margin: 0;
-            }
-            #debug {
-                position: fixed;
-                left: 10px;
-                bottom: 10px;
-                pointer-events: none;
-            }
-        </style>
-    </head>
-    <body>
-        <svg height="100%" width="100%">
-            <circle cx="100" cy="100" r="0"/>
-            <circle cx="200" cy="100" r="0"/>
-            <circle cx="300" cy="100" r="0"/>
-            <circle cx="150" cy="186.6" r="0"/>
-            <circle cx="250" cy="186.6" r="0"/>
-            <circle cx="350" cy="186.6" r="0"/>
-        </svg>
-        <pre id="debug"></pre>
-        <script src="./main.js"></script>
-    </body>
+  <head>
+    <title>Coin Hexagon game</title>
+    <meta content='width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+    <style>
+      html, body {
+        margin: 0;
+      }
+      #debug {
+        position: fixed;
+        left: 10px;
+        bottom: 10px;
+        pointer-events: none;
+      }
+      html, body {
+        overflow-x: hidden;
+      }
+      body {
+        position: relative;
+      }
+    </style>
+  </head>
+  <body>
+    <svg height="100%" width="100%">
+      <circle cx="100" cy="100" r="0"/>
+      <circle cx="200" cy="100" r="0"/>
+      <circle cx="300" cy="100" r="0"/>
+      <circle cx="150" cy="186.6" r="0"/>
+      <circle cx="250" cy="186.6" r="0"/>
+      <circle cx="350" cy="186.6" r="0"/>
+    </svg>
+    <pre id="debug"></pre>
+    <script src="./main.js"></script>
+  </body>
 </html>
 
