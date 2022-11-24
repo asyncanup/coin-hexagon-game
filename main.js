@@ -43,7 +43,7 @@
       { x: 150, y: -13.4 },
     ],
     state: states.waiting(),
-    slideSpeed: 1 / 10,
+    slideSpeed: 1 / 5,
     showDebugInfo: window.location.search === '?debug',
   };
 
